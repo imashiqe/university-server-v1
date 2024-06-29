@@ -3,10 +3,10 @@ import { StudentService } from './student.service';
 
 const createStudent = async (req: Request, res: Response) => {
   try {
-    const Student = req.body;
+    const { student: studentData } = req.body;
 
     // will call service func to send this data
-    const result = await StudentService.createStudentIntoDB(Student);
+    const result = await StudentService.createStudentIntoDB(studentData);
     // send response
 
     res.status(200).json({
