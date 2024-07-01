@@ -3,6 +3,8 @@ import { StudentService } from './student.service';
 
 const createStudent = async (req: Request, res: Response) => {
   try {
+    //creating a schema validation using zod
+
     const { student: studentData } = req.body;
 
     // will call service func to send this data
