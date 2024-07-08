@@ -1,4 +1,4 @@
-export type Tuser = {
+export type TUser = {
   id: string;
   password: string;
   needPasswordChange: boolean;
