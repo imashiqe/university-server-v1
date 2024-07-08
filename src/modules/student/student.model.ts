@@ -1,13 +1,30 @@
-import { Schema, model } from 'mongoose';
-import {
-  Guardian,
-  LocalGuardian,
-  Student,
-  UserName,
-} from './student.interface';
+import { Schema, model, Document, Types } from 'mongoose';
 import validator from 'validator';
 
-// schema  start
+// Interface definitions for nested schemas
+interface UserName {
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+}
+
+interface Guardian {
+  fatherName: string;
+  fatherOccupation: string;
+  fatherContactNo: string;
+  motherName: string;
+  motherOccupation: string;
+  motherContactNo: string;
+}
+
+interface LocalGuardian {
+  name: string;
+  occupation: string;
+  contactNumber: string;
+  address: string;
+}
+
+// Define schema for UserName
 const userNameSchema = new Schema<UserName>({
   firstName: {
     type: String,
@@ -19,20 +36,20 @@ const userNameSchema = new Schema<UserName>({
         const firstNameStr = value.charAt(0).toUpperCase() + value.slice(1);
         return firstNameStr === value;
       },
-      message: '{VALUE} is not in  capitalize format',
+      message: '{VALUE} is not in capitalize format',
     },
-    middleName: {
-      type: String,
-      trim: true,
-    },
-    lastName: {
-      type: String,
-      required: [true, 'Last Name is required'],
-      trim: true,
-      validate: {
-        validator: (value: string) => validator.isAlpha(value),
-        message: '{VALUE} is not a valid Last Name',
-      },
+  },
+  middleName: {
+    type: String,
+    trim: true,
+  },
+  lastName: {
+    type: String,
+    required: [true, 'Last Name is required'],
+    trim: true,
+    validate: {
+      validator: (value: string) => validator.isAlpha(value),
+      message: '{VALUE} is not a valid Last Name',
     },
   },
 });
@@ -96,11 +113,35 @@ const localGuardianSchema = new Schema<LocalGuardian>({
 });
 
 // Define schema for Student
+interface Student extends Document {
+  id: string;
+  name: UserName;
+  user: Types.ObjectId;
+  gender: 'male' | 'female' | 'other';
+  dateOfBirth: string;
+  email: string;
+  contactNumber: string;
+  emergencyContact: string;
+  bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
+  presentAddress: string;
+  permanentAddress: string;
+  guardian: Guardian;
+  localGuardian: LocalGuardian;
+  profileImg?: string;
+  isDeleted: boolean;
+}
+
 const studentSchema = new Schema<Student>({
   id: { type: String, required: true, unique: true },
   name: {
     type: userNameSchema,
     required: [true, 'Student Name is required'],
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    required: [true, 'User is required'],
+    unique: true,
+    ref: 'User',
   },
   gender: {
     type: String,
@@ -117,7 +158,6 @@ const studentSchema = new Schema<Student>({
     trim: true,
     unique: true,
     lowercase: true,
-    // Validate email format
     validate: {
       validator: (value: string) => validator.isEmail(value),
       message: '{VALUE} is not a valid email',
@@ -156,11 +196,7 @@ const studentSchema = new Schema<Student>({
     required: true,
   },
   profileImg: { type: String },
-  isActive: {
-    type: String,
-    enum: ['active', 'inactive'],
-    default: 'active',
-  },
+  isDeleted: { type: Boolean, default: false },
 });
 
 export const StudentModel = model<Student>('Student', studentSchema);
