@@ -199,4 +199,10 @@ const studentSchema = new Schema<Student>({
   isDeleted: { type: Boolean, default: false },
 });
 
+
+// studentSchema.pre('save', function (next) {
+//   const user = this;
+//   user.password = await bcrypt.hash(user.password, Number(process.env.SALT_ROUNDS));
+// });
+
 export const StudentModel = model<Student>('Student', studentSchema);
