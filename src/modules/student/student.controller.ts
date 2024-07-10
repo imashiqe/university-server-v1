@@ -1,28 +1,21 @@
 import { NextFunction, Request, Response } from 'express';
+import httpStatus from 'http-status';
+import sendResponse from '../../app/utils/sendResponse';
 import { StudentService } from './student.service';
 
-const getAllStudent = async (req: Request, res: Response , next: NextFunction) => {
-  try {
-    const result = await StudentService.getAllStudentsFromDB();
-    res.status(200).json({
-      success: true,
-      message: 'All Students fetched successfully',
-      data: result,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-const getSingleStudent = async (req: Request, res: Response, next: NextFunction) => {
+const getSingleStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { studentId } = req.params;
-
     const result = await StudentService.getSingleStudentFromDB(studentId);
 
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
       success: true,
-      message: ' Students fetched successfully',
+      message: 'Student is retrieved succesfully',
       data: result,
     });
   } catch (err) {
@@ -30,7 +23,47 @@ const getSingleStudent = async (req: Request, res: Response, next: NextFunction)
   }
 };
 
-export default {
-  getAllStudent,
+const getAllStudents = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const result = await StudentService.getAllStudentsFromDB();
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Student are retrieved succesfully',
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deleteStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { studentId } = req.params;
+    const result = await StudentService.deleteStudentFromDB(studentId);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Student is deleted succesfully',
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const StudentControllers = {
+  getAllStudents,
   getSingleStudent,
+  deleteStudent,
 };
