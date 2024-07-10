@@ -1,4 +1,4 @@
-### PH University Management Project
+### University Management Project
 
 #### Technology Stack
 

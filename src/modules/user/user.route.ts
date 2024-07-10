@@ -2,8 +2,6 @@ import express from 'express';
 
 import { createStudentValidationSchema } from '../student/student.validation';
 
-// Check if the module exports the member correctly
-
 import { UserControllers } from './user.controller';
 import validateRequest from '../../app/middlewares/validateRequest';
 

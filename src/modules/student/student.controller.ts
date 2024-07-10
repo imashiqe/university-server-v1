@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import httpStatus from 'http-status';
 import sendResponse from '../../app/utils/sendResponse';
@@ -5,6 +6,14 @@ import sendResponse from '../../app/utils/sendResponse';
 import { StudentService } from './student.service'; // Add this line to import the 'studentService'
 
 const getSingleStudent: RequestHandler = async (
+=======
+import { NextFunction, Request, Response } from 'express';
+import httpStatus from 'http-status';
+import sendResponse from '../../app/utils/sendResponse';
+import { StudentService } from './student.service';
+
+const getSingleStudent = async (
+>>>>>>> b1398cb25ba1ea52979869bae3ee64af3556dea5
   req: Request,
   res: Response,
   next: NextFunction
@@ -24,7 +33,11 @@ const getSingleStudent: RequestHandler = async (
   }
 };
 
+<<<<<<< HEAD
 const getAllStudents: RequestHandler = async (
+=======
+const getAllStudents = async (
+>>>>>>> b1398cb25ba1ea52979869bae3ee64af3556dea5
   req: Request,
   res: Response,
   next: NextFunction
@@ -35,7 +48,11 @@ const getAllStudents: RequestHandler = async (
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
+<<<<<<< HEAD
       message: 'Student are retrieved Succesfully',
+=======
+      message: 'Student are retrieved succesfully',
+>>>>>>> b1398cb25ba1ea52979869bae3ee64af3556dea5
       data: result,
     });
   } catch (err) {
@@ -43,7 +60,11 @@ const getAllStudents: RequestHandler = async (
   }
 };
 
+<<<<<<< HEAD
 const deleteStudent: RequestHandler = async (
+=======
+const deleteStudent = async (
+>>>>>>> b1398cb25ba1ea52979869bae3ee64af3556dea5
   req: Request,
   res: Response,
   next: NextFunction
