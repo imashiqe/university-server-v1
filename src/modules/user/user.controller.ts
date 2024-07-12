@@ -23,7 +23,7 @@ const createStudent = async (
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'Student is created succesfully',
+      message: 'Student is created successfully',
       data: result,
     });
   } catch (err) {
