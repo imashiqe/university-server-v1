@@ -77,7 +77,7 @@ export const updateStudentValidationSchema = z.object({
     student: z.object({
       name: updateUserNameValidationSchema,
       gender: z.enum(['male', 'female', 'other']).optional(),
-      dateOfBirth: z.string().optional(),
+      dateOfBirth: z.date().optional(),
       email: z.string().email().optional(),
       contactNo: z.string().optional(),
       emergencyContactNo: z.string().optional(),
