@@ -19,3 +19,7 @@ export type TAcademicSemester = {
   startMonth: TMonths;
   endMonth: TMonths;
 };
+
+export type TacademicSemesterName = 'Autumn' | 'Summer' | 'Fall';
+
+export type TacademicSemesterCode = '01' | '02' | '03';
