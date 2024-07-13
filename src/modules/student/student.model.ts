@@ -6,6 +6,7 @@ import {
   TStudent,
   TUserName,
 } from './student.interface';
+import { string } from 'zod';
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -134,6 +135,10 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       required: [true, 'Local guardian information is required'],
     },
     profileImg: { type: String },
+    admissionSemester: {
+      type: Schema.Types.ObjectId | string,
+      ref: 'AcademicSemester',
+    },
     isDeleted: {
       type: Boolean,
       default: false,
@@ -147,7 +152,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
 );
 
 // virtual
-studentSchema.virtual('fullName').get(function () {
+studentSchema.virtual('fullName').get(function (this: TStudent) {
   return this.name.firstName + this.name.middleName + this.name.lastName;
 });
 
