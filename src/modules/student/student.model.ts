@@ -6,7 +6,6 @@ import {
   TStudent,
   TUserName,
 } from './student.interface';
-import { string } from 'zod';
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -136,7 +135,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     },
     profileImg: { type: String },
     admissionSemester: {
-      type: Schema.Types.ObjectId | string,
+      type: Schema.Types.ObjectId,
       ref: 'AcademicSemester',
     },
     isDeleted: {
