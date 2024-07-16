@@ -49,7 +49,7 @@
 
 3. **GitHub Repository Description**
 
-**Repository Name**: PH-University-Management
+**Repository Name**: University-Management
 
 **Description**:
 This repository contains the backend implementation of a university management system using TypeScript, Node.js, and Express.js. It includes user authentication and authorization mechanisms for students, faculty, and administrators. Features include profile management, academic processes management, and user administration functionalities. The application uses MongoDB for data storage and is designed to provide a secure and efficient platform for managing university operations.
