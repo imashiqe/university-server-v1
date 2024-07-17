@@ -42,7 +42,7 @@ AcademicDepartmentSchema.pre('findOneAndUpdate', async function (next) {
   const isDepartmentExist = await AcademicDepartment.findOne(query);
   query;
 
-  if (isDepartmentExist) {
+  if (!isDepartmentExist) {
     throw new AppError(
       httpStatus.NOT_FOUND,
       'This department is already exist!'
