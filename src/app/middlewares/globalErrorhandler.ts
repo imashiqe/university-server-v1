@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ErrorRequestHandler, Request, Response } from 'express';
+import { ZodError } from 'zod';
 
 const globalErrorHandler: ErrorRequestHandler = (
   err: any,
   req: Request,
   res: Response
 ) => {
-  const statusCode = err.statusCode || 500;
-  const message = err.message || 'Something went wrong!';
+  let statusCode = err.statusCode || 500;
+  let message = err.message || 'Something went wrong!';
 
   type TErrorSource = {
     path: string | number;
@@ -20,6 +21,11 @@ const globalErrorHandler: ErrorRequestHandler = (
       message: 'Something went wrong!',
     },
   ];
+
+  if (err instanceof ZodError) {
+    statusCode = 400;
+    message = 'Validation Zod Error';
+  }
 
   return res.status(statusCode).json({
     success: false,
